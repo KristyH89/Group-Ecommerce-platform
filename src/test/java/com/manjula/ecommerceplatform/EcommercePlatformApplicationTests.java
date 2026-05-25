@@ -1,4 +1,4 @@
-package com.manju.ecommerce;
+package com.manjula.ecommerceplatform;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
