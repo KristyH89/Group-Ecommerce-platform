@@ -1,4 +1,10 @@
 package com.manjula.ecommerceplatform.repository;
 
-public interface ProductRepository {
+import com.manjula.ecommerceplatform.entity.Product;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ProductRepository extends JpaRepository<Product, Integer> {
+
+    //Required Queries:
+
 }
