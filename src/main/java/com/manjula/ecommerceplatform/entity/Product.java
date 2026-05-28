@@ -34,7 +34,7 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "products_promotions",
             joinColumns = @JoinColumn(name = "product_id"),
