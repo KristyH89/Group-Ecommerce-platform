@@ -1,113 +1,82 @@
 package com.manjula.ecommerceplatform.service;
 
-import com.manjula.ecommerceplatform.dto.CustomerRequestDto;
-import com.manjula.ecommerceplatform.dto.CustomerResponseDto;
+import com.manjula.ecommerceplatform.dto.request.CustomerRequest;
+import com.manjula.ecommerceplatform.dto.response.CustomerResponse;
 import com.manjula.ecommerceplatform.entity.Customer;
+import com.manjula.ecommerceplatform.mapper.CustomerMapper;
 import com.manjula.ecommerceplatform.repository.CustomerRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.manjula.ecommerceplatform.entity.Address;
-import com.manjula.ecommerceplatform.entity.UserProfile;
-
-import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
+    private final CustomerMapper customerMapper;
+
+    public CustomerServiceImpl(
+            CustomerRepository customerRepository,
+            CustomerMapper customerMapper) {
+
+        this.customerRepository = customerRepository;
+        this.customerMapper = customerMapper;
+    }
 
     @Override
-    public CustomerResponseDto createCustomer(CustomerRequestDto dto) {
+    public CustomerResponse register(CustomerRequest request) {
 
-        // Check if email already exists
-        if (customerRepository.existsByEmail(dto.getEmail())) {
-            throw new RuntimeException("Email already exists");
+        if (customerRepository.existsByEmail(request.email())) {
+
+            throw new EmailAlredayExistsException(
+                    "Email already exists: " + request.email()
+            );
         }
 
-        // Create Address object
-        Address address = Address.builder()
-                .street(dto.getStreet())
-                .city(dto.getCity())
-                .zipCode(dto.getZipCode())
-                .build();
+        Customer customer = customerMapper.toEntity(request);
 
-        // Create UserProfile object (optional)
-        UserProfile profile = null;
+        Customer savedCustomer =
+                customerRepository.save(customer);
 
-        if (dto.getNickname() != null && !dto.getNickname().isBlank()) {
+        return customerMapper.toResponse(savedCustomer);
+    }
 
-            profile = UserProfile.builder()
-                    .nickname(dto.getNickname())
-                    .phoneNumber(dto.getPhoneNumber())
-                    .bio(dto.getBio())
-                    .build();
+    @Override
+    public CustomerResponse findById(Long id) {
+
+        Customer customer = customerRepository.findById(id)
+                .orElseThrow(() ->
+
+                        new ResourceNotFoundException("Customer not found with id: " + id));
+
+        return customerMapper.toResponse(customer);
+    }
+
+    @Override
+    public CustomerResponse update(Long id, CustomerRequest request) {
+
+        Customer customer = customerRepository.findById(id)
+                .orElseThrow(() ->
+
+                        new ResourceNotFoundException("Customer not found with id: " + id));
+
+        customer.setFirstName(request.firstName());
+        customer.setLastName(request.lastName());
+        customer.setEmail(request.email());
+        Address address = customer.getAddress();
+
+        if (address == null) {
+            address = new Address();
         }
 
-        // Create Customer object
-        Customer customer = Customer.builder()
-                .firstName(dto.getFirstName())
-                .lastName(dto.getLastName())
-                .email(dto.getEmail())
-                .address(address)
-                .profile(profile)
-                .build();
+        address.setStreet(request.street());
+        address.setCity(request.city());
+        address.setZipCode(request.zipCode());
 
-        // Save customer
-        Customer savedCustomer = customerRepository.save(customer);
+        customer.setAddress(address);
 
-        // Return response dto
-        return mapToResponse(savedCustomer);
-    }
-    // GET ALL CUSTOMERS
-    @Override
-    public List<CustomerResponseDto> getAllCustomers() {
+        Customer updatedCustomer =
+                customerRepository.save(customer);
 
-        return customerRepository.findAll()
-                .stream()
-                .map(this::mapToResponse)
-                .toList();
-    }
-
-    // GET CUSTOMER BY EMAIL
-    @Override
-    public CustomerResponseDto getCustomerByEmail(String email) {
-
-        Customer customer = customerRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Customer not found"));
-
-        return mapToResponse(customer);
-    }
-
-    // WRITE THE MAPPER METHOD HERE
-    private CustomerResponseDto mapToResponse(Customer customer) {
-
-        return CustomerResponseDto.builder()
-                .id(customer.getId())
-                .firstName(customer.getFirstName())
-                .lastName(customer.getLastName())
-                .email(customer.getEmail())
-                .createdAt(customer.getCreatedAt())
-
-                .street(customer.getAddress().getStreet())
-                .city(customer.getAddress().getCity())
-                .zipCode(customer.getAddress().getZipCode())
-
-                .nickname(
-                        customer.getProfile() != null
-                                ? customer.getProfile().getNickname()
-                                : null
-                )
-                .phoneNumber(
-                        customer.getProfile() != null
-                                ? customer.getProfile().getPhoneNumber()
-                                : null
-                )
-                .bio(
-                        customer.getProfile() != null
-                                ? customer.getProfile().getBio()
-                                : null
-                )
-                .build();
+        return customerMapper.toResponse(updatedCustomer);
     }
 }

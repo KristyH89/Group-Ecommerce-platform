@@ -2,19 +2,13 @@ package com.manjula.ecommerceplatform.service;
 
 
 
-import com.manjula.ecommerceplatform.dto.CustomerRequestDto;
-import com.manjula.ecommerceplatform.dto.CustomerResponseDto;
+import com.manjula.ecommerceplatform.dto.request.CustomerRequest;
+import com.manjula.ecommerceplatform.dto.response.CustomerResponse;
 
-import java.util.List;
 
 public interface CustomerService {
 
-    // Create Customer
-    CustomerResponseDto createCustomer(CustomerRequestDto dto);
-
-    // Get All Customers
-    List<CustomerResponseDto> getAllCustomers();
-
-    // Get Customer By Email
-    CustomerResponseDto getCustomerByEmail(String email);
+    CustomerResponse register(CustomerRequest request);
+    CustomerResponse findById(Long id);
+    CustomerResponse update(Long id, CustomerRequest request);
 }
