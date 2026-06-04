@@ -1,0 +1,61 @@
+package com.manjula.ecommerceplatform;
+
+import com.manjula.ecommerceplatform.dto.ProductRequestDTO;
+import com.manjula.ecommerceplatform.dto.ProductResponseDTO;
+import com.manjula.ecommerceplatform.entity.Category;
+import com.manjula.ecommerceplatform.entity.Product;
+import com.manjula.ecommerceplatform.mapper.ProductMapper;
+import com.manjula.ecommerceplatform.repository.CategoryRepository;
+import com.manjula.ecommerceplatform.repository.ProductRepository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+public class ProductServiceImpl implements ProductService {
+
+    private final ProductRepository productRepository;
+    private final ProductMapper mapper;
+    private final CategoryRepository categoryRepository;
+
+    public ProductServiceImpl(ProductRepository productRepository, ProductMapper mapper, CategoryRepository categoryRepository) {
+        this.productRepository = productRepository;
+        this.mapper = mapper;
+        this.categoryRepository = categoryRepository;
+    }
+
+    @Override
+    @Transactional
+    public ProductResponseDTO create(ProductRequestDTO request) {
+        Category category = categoryRepository.findById(request.categoryId())
+                .orElseThrow();
+
+        Product product = mapper.toEntity(request);
+
+        product.setCategory(category);
+
+        Product saved = productRepository.save(product);
+
+        return  mapper.toResponse(saved);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ProductResponseDTO> findAll() {
+        return productRepository.findAll()
+                .stream()
+                .map(mapper::toResponse)
+                .toList();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ProductResponseDTO> searchByName(String name) {
+        return productRepository.findByName(name)
+                .stream()
+                .map(mapper::toResponse)
+                .collect(Collectors.toList());
+    }
+}
