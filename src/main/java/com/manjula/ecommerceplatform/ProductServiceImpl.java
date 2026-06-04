@@ -4,7 +4,6 @@ import com.manjula.ecommerceplatform.dto.ProductRequestDTO;
 import com.manjula.ecommerceplatform.dto.ProductResponseDTO;
 import com.manjula.ecommerceplatform.entity.Category;
 import com.manjula.ecommerceplatform.entity.Product;
-import com.manjula.ecommerceplatform.exception.ResourceNotFoundException;
 import com.manjula.ecommerceplatform.mapper.ProductMapper;
 import com.manjula.ecommerceplatform.repository.CategoryRepository;
 import com.manjula.ecommerceplatform.repository.ProductRepository;
@@ -33,13 +32,13 @@ public class ProductServiceImpl implements ProductService {
         Category category = categoryRepository.findById(request.categoryId())
                 .orElseThrow();
 
-        Product product = mapper.toProductEntity(request);
+        Product product = mapper.toEntity(request);
 
         product.setCategory(category);
 
         Product saved = productRepository.save(product);
 
-        return  mapper.toProductResponseDTO(saved);
+        return  mapper.toResponse(saved);
     }
 
     @Override
@@ -47,7 +46,7 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductResponseDTO> findAll() {
         return productRepository.findAll()
                 .stream()
-                .map(mapper::toProductResponseDTO)
+                .map(mapper::toResponse)
                 .toList();
     }
 
@@ -56,7 +55,7 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductResponseDTO> searchByName(String name) {
         return productRepository.findByName(name)
                 .stream()
-                .map(mapper::toProductResponseDTO)
+                .map(mapper::toResponse)
                 .collect(Collectors.toList());
     }
 }

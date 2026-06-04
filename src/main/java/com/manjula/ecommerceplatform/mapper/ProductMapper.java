@@ -19,7 +19,7 @@ public class ProductMapper {
     }
 
     //Convert ProductRequestDTO to Product entity
-    public Product toProductEntity(ProductRequestDTO request){
+    public Product toEntity(ProductRequestDTO request){
         if(request == null) throw new IllegalArgumentException("Product Request cannot be null");
         Product product = new Product();
         product.setName(request.name());
@@ -33,7 +33,7 @@ public class ProductMapper {
     }
 
     //Convert Product entity to ProductResponseDTO
-    public ProductResponseDTO toProductResponseDTO(Product product){
+    public ProductResponseDTO toResponse(Product product){
         if(product == null) throw new IllegalArgumentException("Product cannot be null");
         ProductResponseDTO productResponseDTO = new ProductResponseDTO(
                 product.getId(),
