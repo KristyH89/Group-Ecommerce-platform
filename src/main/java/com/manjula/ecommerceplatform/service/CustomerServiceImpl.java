@@ -26,8 +26,8 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerResponse register(CustomerRequest request) {
 
         if (customerRepository.existsByEmail(request.email())) {
-            // Can be replaced by Aida's EmailAlreadyExistsException
-            throw new IllegalArgumentException(
+
+            throw new EmailAlredayExistsException(
                     "Email already exists: " + request.email()
             );
         }
@@ -45,8 +45,8 @@ public class CustomerServiceImpl implements CustomerService {
 
         Customer customer = customerRepository.findById(id)
                 .orElseThrow(() ->
-                        // Can be replaced by Aida's ResourceNotFoundException
-                        new IllegalArgumentException("Customer not found with id: " + id));
+
+                        new ResourceNotFoundException("Customer not found with id: " + id));
 
         return customerMapper.toResponse(customer);
     }
@@ -56,8 +56,8 @@ public class CustomerServiceImpl implements CustomerService {
 
         Customer customer = customerRepository.findById(id)
                 .orElseThrow(() ->
-                        // Can be replaced by Aida's ResourceNotFoundException
-                        new IllegalArgumentException("Customer not found with id: " + id));
+
+                        new ResourceNotFoundException("Customer not found with id: " + id));
 
         customer.setFirstName(request.firstName());
         customer.setLastName(request.lastName());

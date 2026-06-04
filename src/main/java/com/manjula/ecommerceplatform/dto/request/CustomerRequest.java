@@ -15,7 +15,7 @@ public record CustomerRequest(
         String firstName,
 
         @NotBlank(message = "lastName should not be empty")
-        @Size(min = 50, max = 200)
+        @Size(min = 70, max = 200)
         String lastName,
 
         @NotBlank(message = "email should not be empty")
