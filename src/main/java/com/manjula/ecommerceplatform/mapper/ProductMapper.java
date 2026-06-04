@@ -10,11 +10,11 @@ import org.springframework.stereotype.Component;
 
 
 @Component
-public class EntityToDtoMapper {
+public class ProductMapper {
 
     private final CategoryRepository categoryRepository;
 
-    public EntityToDtoMapper(CategoryRepository categoryRepository) {
+    public ProductMapper(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
     }
 

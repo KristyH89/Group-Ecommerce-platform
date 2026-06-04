@@ -2,6 +2,7 @@ package com.manjula.ecommerceplatform;
 
 import com.manjula.ecommerceplatform.dto.ProductRequestDTO;
 import com.manjula.ecommerceplatform.dto.ProductResponseDTO;
+import com.manjula.ecommerceplatform.entity.Product;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,5 +13,5 @@ public interface ProductService {
 
     List<ProductResponseDTO> findAll();
 
-    Optional<List<ProductResponseDTO>> searchByName(String name);
+    List<ProductResponseDTO> searchByName(String name);
 }
