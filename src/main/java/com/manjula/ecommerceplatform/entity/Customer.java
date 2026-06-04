@@ -7,6 +7,8 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "customers")
@@ -58,4 +60,7 @@ public class Customer {
     public void prePersist() {
         this.createdAt = Instant.now();
     }
+
+    @OneToMany(mappedBy = "customer")
+    private List<Order> orders = new ArrayList<>();
 }
