@@ -2,21 +2,33 @@ package com.manjula.ecommerceplatform.mapper;
 
 import com.manjula.ecommerceplatform.dto.ProductRequestDTO;
 import com.manjula.ecommerceplatform.dto.ProductResponseDTO;
+import com.manjula.ecommerceplatform.entity.Category;
 import com.manjula.ecommerceplatform.entity.Product;
+import com.manjula.ecommerceplatform.repository.CategoryRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 
 @Component
 public class EntityToDtoMapper {
 
+    private final CategoryRepository categoryRepository;
+
+    public EntityToDtoMapper(CategoryRepository categoryRepository) {
+        this.categoryRepository = categoryRepository;
+    }
+
     //Convert ProductRequestDTO to Product entity
-    public Product toProductEntity(ProductRequestDTO productRequestDTO){
-        if(productRequestDTO == null) throw new IllegalArgumentException("Product Request cannot be null");
+    public Product toProductEntity(ProductRequestDTO request){
+        if(request == null) throw new IllegalArgumentException("Product Request cannot be null");
         Product product = new Product();
-        product.setName(productRequestDTO.name());
-        product.setPrice(productRequestDTO.price());
-        //product.set Find a solution for the category id
+        product.setName(request.name());
+        product.setPrice(request.price());
+        //Find the category by id
+        Category category = categoryRepository.findById(request.categoryId())
+                .orElseThrow(() -> new EntityNotFoundException("Category Not Found"));
+        product.setCategory(category);
+
         return product;
     }
 
