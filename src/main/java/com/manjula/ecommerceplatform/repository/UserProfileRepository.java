@@ -1,7 +1,7 @@
-package com.manjula.ecommerceplatform.repository;
+package com.lexicon.ecommerceplatform.repository;
 
 
-import com.manjula.ecommerceplatform.entity.UserProfile;
+import com.lexicon.ecommerceplatform.entity.UserProfile;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

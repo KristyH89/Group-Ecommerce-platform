@@ -1,9 +1,9 @@
-package com.manjula.ecommerceplatform.service;
+package com.lexicon.ecommerceplatform.service;
 
 
 
-import com.manjula.ecommerceplatform.dto.CustomerRequestDto;
-import com.manjula.ecommerceplatform.dto.CustomerResponseDto;
+import com.lexicon.ecommerceplatform.dto.CustomerRequestDto;
+import com.lexicon.ecommerceplatform.dto.CustomerResponseDto;
 
 import java.util.List;
 
