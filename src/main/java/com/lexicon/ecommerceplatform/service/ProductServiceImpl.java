@@ -1,4 +1,4 @@
-package com.lexicon.ecommerceplatform;
+package com.lexicon.ecommerceplatform.service;
 
 import com.lexicon.ecommerceplatform.dto.ProductRequestDTO;
 import com.lexicon.ecommerceplatform.dto.ProductResponseDTO;
