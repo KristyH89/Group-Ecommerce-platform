@@ -14,13 +14,17 @@ import com.lexicon.ecommerceplatform.repository.ProductRepository;
 import com.lexicon.ecommerceplatform.entity.*;
 import com.lexicon.ecommerceplatform.enums.OrderStatus;
 import com.lexicon.ecommerceplatform.repository.*;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+
 @Service
 @RequiredArgsConstructor
+@Transactional
+
 public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
