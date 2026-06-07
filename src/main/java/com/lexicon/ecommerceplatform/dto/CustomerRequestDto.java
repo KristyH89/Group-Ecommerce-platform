@@ -1,19 +1,41 @@
 package com.lexicon.ecommerceplatform.dto;
 
-import lombok.Data;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
-@Data
-public class CustomerRequestDto {
+public record CustomerRequestDto(
 
-    private String firstName;
-    private String lastName;
-    private String email;
+        @NotBlank(message = "firstName should not be empty")
+        @Size(min = 2, max = 200)
+        String firstName,
 
-    private String street;
-    private String city;
-    private String zipCode;
+        @NotBlank(message = "lastName should not be empty")
+        @Size(min = 2, max = 200)
+        String lastName,
 
-    private String nickname;
-    private String phoneNumber;
-    private String bio;
+        @NotBlank(message = "email should not be empty")
+        @Email(message = "invalid email format")
+        @Size(max = 255)
+        String email,
+
+        @NotBlank(message = "password should not be empty")
+        @Size(min = 7, max = 25)
+        @Pattern(regexp =  "^[a-zA-Z0-9]+$", message = "Password can only contain letters and digits")
+        String password,
+
+        @NotBlank(message = "street should not be  empty")
+        @Size(min = 1, max = 100)
+        String street,
+
+        @NotBlank(message = " city should not be empty")
+        @Size(min = 1, max = 100)
+        String city,
+
+        @NotBlank(message = "zipcode should not be empty")
+        @Size(min = 1, max = 100)
+        @Pattern( regexp="^[0-9]{3} ?[0-9]{2}$", message = "Zip code must be a valid Swedish postal code")
+        String zipCode
+) {
 }

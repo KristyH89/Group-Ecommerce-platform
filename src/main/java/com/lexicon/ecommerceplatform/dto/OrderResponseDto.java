@@ -11,13 +11,20 @@ import java.util.List;
 @Builder
 public class OrderResponseDto {
 
+
+
     private Long orderId;
+
 
     private Instant orderDate;
 
+
+
     private OrderStatus status;
 
+
     private Long customerId;
+
 
     private List<OrderItemResponseDto> items;
 }

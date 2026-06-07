@@ -5,16 +5,10 @@ package com.lexicon.ecommerceplatform.service;
 import com.lexicon.ecommerceplatform.dto.CustomerRequestDto;
 import com.lexicon.ecommerceplatform.dto.CustomerResponseDto;
 
-import java.util.List;
 
 public interface CustomerService {
 
-    // Create Customer
-    CustomerResponseDto createCustomer(CustomerRequestDto dto);
-
-    // Get All Customers
-    List<CustomerResponseDto> getAllCustomers();
-
-    // Get Customer By Email
-    CustomerResponseDto getCustomerByEmail(String email);
+    CustomerResponseDto register(CustomerRequestDto request);
+    CustomerResponseDto findById(Long id);
+    CustomerResponseDto update(Long id, CustomerRequestDto request);
 }
