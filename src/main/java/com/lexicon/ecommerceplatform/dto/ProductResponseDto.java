@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 
-public record ProductResponseDTO(
+public record ProductResponseDto(
         Long id,
         String name,
         List<String> imgUrls,

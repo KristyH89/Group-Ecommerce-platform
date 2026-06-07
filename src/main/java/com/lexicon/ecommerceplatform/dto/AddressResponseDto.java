@@ -1,6 +1,6 @@
-package com.lexicon.ecommerceplatform.dto.response;
+package com.lexicon.ecommerceplatform.dto;
 
-public record AddressResponse(
+public record AddressResponseDto(
         Long id,
         String street,
         String city,

@@ -1,7 +1,7 @@
 package com.lexicon.ecommerceplatform.service;
 
-import com.lexicon.ecommerceplatform.dto.request.CustomerRequest;
-import com.lexicon.ecommerceplatform.dto.response.CustomerResponse;
+import com.lexicon.ecommerceplatform.dto.CustomerRequestDto;
+import com.lexicon.ecommerceplatform.dto.CustomerResponseDto;
 import com.lexicon.ecommerceplatform.entity.Customer;
 import com.lexicon.ecommerceplatform.exception.EmailAlreadyExistsException;
 import com.lexicon.ecommerceplatform.exception.ResourceNotFoundException;
@@ -25,7 +25,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerResponse register(CustomerRequest request) {
+    public CustomerResponseDto register(CustomerRequestDto request) {
 
         if (customerRepository.existsByEmail(request.email())) {
 
@@ -43,7 +43,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerResponse findById(Long id) {
+    public CustomerResponseDto findById(Long id) {
 
         Customer customer = customerRepository.findById(id)
                 .orElseThrow(() ->
@@ -53,7 +53,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerResponse update(Long id, CustomerRequest request) {
+    public CustomerResponseDto update(Long id, CustomerRequestDto request) {
 
         Customer customer = customerRepository.findById(id)
                 .orElseThrow(() ->

@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
 
-public record ProductRequestDTO(
+public record ProductRequestDto(
 
         @NotBlank(message = "Name cannot be blank")
         @Size(max = 200, message  = "Name must not exceed 200 characters")

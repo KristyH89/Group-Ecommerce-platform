@@ -1,8 +1,8 @@
 package com.lexicon.ecommerceplatform.mapper;
 
-import com.lexicon.ecommerceplatform.dto.request.CustomerRequest;
-import com.lexicon.ecommerceplatform.dto.response.AddressResponse;
-import com.lexicon.ecommerceplatform.dto.response.CustomerResponse;
+import com.lexicon.ecommerceplatform.dto.CustomerRequestDto;
+import com.lexicon.ecommerceplatform.dto.AddressResponseDto;
+import com.lexicon.ecommerceplatform.dto.CustomerResponseDto;
 import com.lexicon.ecommerceplatform.entity.Address;
 import com.lexicon.ecommerceplatform.entity.Customer;
 import org.springframework.stereotype.Component;
@@ -10,12 +10,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class CustomerMapper {
 
-    public CustomerResponse toResponse(Customer customer) {
+    public CustomerResponseDto toResponse(Customer customer) {
 
-        AddressResponse addressResponse = null;
+        AddressResponseDto addressResponse = null;
 
         if (customer.getAddress() != null) {
-            addressResponse = new AddressResponse(
+            addressResponse = new AddressResponseDto(
                     customer.getAddress().getId(),
                     customer.getAddress().getStreet(),
                     customer.getAddress().getCity(),
@@ -23,7 +23,7 @@ public class CustomerMapper {
             );
         }
 
-        return new CustomerResponse(
+        return new CustomerResponseDto(
                 customer.getId(),
                 customer.getFirstName() + " " + customer.getLastName(),
                 customer.getEmail(),
@@ -31,7 +31,7 @@ public class CustomerMapper {
         );
     }
 
-    public Customer toEntity(CustomerRequest request) {
+    public Customer toEntity(CustomerRequestDto request) {
 
         Address address = new Address();
         address.setStreet(request.street());

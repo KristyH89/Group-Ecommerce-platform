@@ -1,15 +1,15 @@
 package com.lexicon.ecommerceplatform.service;
 
-import com.lexicon.ecommerceplatform.dto.ProductRequestDTO;
-import com.lexicon.ecommerceplatform.dto.ProductResponseDTO;
+import com.lexicon.ecommerceplatform.dto.ProductRequestDto;
+import com.lexicon.ecommerceplatform.dto.ProductResponseDto;
 
 import java.util.List;
 
 public interface ProductService {
 
-    ProductResponseDTO create(ProductRequestDTO productRequestDTO);
+    ProductResponseDto create(ProductRequestDto productRequestDTO);
 
-    List<ProductResponseDTO> findAll();
+    List<ProductResponseDto> findAll();
 
-    List<ProductResponseDTO> searchByName(String name);
+    List<ProductResponseDto> searchByName(String name);
 }

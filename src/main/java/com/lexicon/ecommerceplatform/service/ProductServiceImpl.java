@@ -1,7 +1,7 @@
 package com.lexicon.ecommerceplatform.service;
 
-import com.lexicon.ecommerceplatform.dto.ProductRequestDTO;
-import com.lexicon.ecommerceplatform.dto.ProductResponseDTO;
+import com.lexicon.ecommerceplatform.dto.ProductRequestDto;
+import com.lexicon.ecommerceplatform.dto.ProductResponseDto;
 import com.lexicon.ecommerceplatform.entity.Category;
 import com.lexicon.ecommerceplatform.entity.Product;
 import com.lexicon.ecommerceplatform.mapper.ProductMapper;
@@ -28,7 +28,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public ProductResponseDTO create(ProductRequestDTO request) {
+    public ProductResponseDto create(ProductRequestDto request) {
         Category category = categoryRepository.findById(request.categoryId())
                 .orElseThrow();
 
@@ -43,7 +43,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ProductResponseDTO> findAll() {
+    public List<ProductResponseDto> findAll() {
         return productRepository.findAll()
                 .stream()
                 .map(mapper::toResponse)
@@ -52,7 +52,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ProductResponseDTO> searchByName(String name) {
+    public List<ProductResponseDto> searchByName(String name) {
         return productRepository.findByName(name)
                 .stream()
                 .map(mapper::toResponse)

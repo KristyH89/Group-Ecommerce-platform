@@ -1,7 +1,7 @@
 package com.lexicon.ecommerceplatform.mapper;
 
-import com.lexicon.ecommerceplatform.dto.ProductRequestDTO;
-import com.lexicon.ecommerceplatform.dto.ProductResponseDTO;
+import com.lexicon.ecommerceplatform.dto.ProductRequestDto;
+import com.lexicon.ecommerceplatform.dto.ProductResponseDto;
 import com.lexicon.ecommerceplatform.entity.Category;
 import com.lexicon.ecommerceplatform.entity.Product;
 import com.lexicon.ecommerceplatform.repository.CategoryRepository;
@@ -19,7 +19,7 @@ public class ProductMapper {
     }
 
     //Convert ProductRequestDTO to Product entity
-    public Product toEntity(ProductRequestDTO request){
+    public Product toEntity(ProductRequestDto request){
         if(request == null) throw new IllegalArgumentException("Product Request cannot be null");
         Product product = new Product();
         product.setName(request.name());
@@ -33,9 +33,9 @@ public class ProductMapper {
     }
 
     //Convert Product entity to ProductResponseDTO
-    public ProductResponseDTO toResponse(Product product){
+    public ProductResponseDto toResponse(Product product){
         if(product == null) throw new IllegalArgumentException("Product cannot be null");
-        ProductResponseDTO productResponseDTO = new ProductResponseDTO(
+        ProductResponseDto productResponseDTO = new ProductResponseDto(
                 product.getId(),
                 product.getName(),
                 product.getImageUrls(),
